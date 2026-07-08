@@ -303,6 +303,7 @@ The `examples/` directory contains:
 - [custom_requests.rs](examples/custom_requests.rs) - dynamic request generation using `request_fn`
 - [rate_ramping.rs](examples/rate_ramping.rs) - advanced rate control using `rate_fn`
 - [step_ramping.rs](examples/step_ramping.rs) - step rate control using `rate_fn`
+- [spike_ramping.rs](examples/spike_ramping.rs) - spike rate using `rate_fn`
 - [hooks_metrics.rs](examples/hooks_metrics.rs) - custom metrics collection using hooks
 - [test_server.rs](examples/test_server.rs) - local axum test server used by the other examples
 
