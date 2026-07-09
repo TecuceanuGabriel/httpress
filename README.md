@@ -305,6 +305,7 @@ The `examples/` directory contains:
 - [step_ramping.rs](examples/step_ramping.rs) - step rate control using `rate_fn`
 - [spike_ramping.rs](examples/spike_ramping.rs) - spike rate using `rate_fn`
 - [hooks_metrics.rs](examples/hooks_metrics.rs) - custom metrics collection using hooks
+- [hooks_retry.rs](examples/hooks_retry.rs) - retrying using hooks
 - [test_server.rs](examples/test_server.rs) - local axum test server used by the other examples
 
 Run examples with:
