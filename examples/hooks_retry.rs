@@ -12,7 +12,7 @@ async fn main() -> Result<()> {
     let results = Benchmark::builder()
         // Return 503 status every 20 request
         .request_fn(|ctx: RequestContext| {
-            let method = if ctx.request_number % 20 == 0 {
+            let method = if ctx.request_number.is_multiple_of(20) {
                 "503"
             } else {
                 "200"
