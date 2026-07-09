@@ -8,11 +8,10 @@ use httpress::{Benchmark, HookAction, HttpMethod, RequestConfig, RequestContext,
 async fn main() -> Result<()> {
     println!("Benchmark with retry on 503 status code using hooks\n");
 
-    // Run benchmark with after_request hook for metrics collection
+    // Run benchmark with after_request hook with 503 retrying
     let results = Benchmark::builder()
-        // Request with 503 return code
+        // Return 503 status every 20 request
         .request_fn(|ctx: RequestContext| {
-            // Return 503 status every 20 request
             let method = if ctx.request_number % 20 == 0 {
                 "503"
             } else {
