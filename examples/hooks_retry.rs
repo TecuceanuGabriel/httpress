@@ -4,7 +4,6 @@ use std::time::Duration;
 
 use httpress::{Benchmark, HookAction, HttpMethod, RequestConfig, RequestContext, Result};
 
-
 #[tokio::main]
 async fn main() -> Result<()> {
     println!("Benchmark with retry on 503 status code using hooks\n");
@@ -12,22 +11,30 @@ async fn main() -> Result<()> {
     // Run benchmark with after_request hook for metrics collection
     let results = Benchmark::builder()
         // Request with 503 return code
-        .request_fn(|_ctx: RequestContext| {
+        .request_fn(|ctx: RequestContext| {
+            // Return 503 status every 20 request
+            let method = if ctx.request_number % 20 == 0 {
+                "503"
+            } else {
+                "200"
+            };
+
             RequestConfig {
-                url: format!("http://localhost:3000/status/{}", "503"),
+                url: format!("http://localhost:3000/status/{}", method),
                 method: HttpMethod::Get,
                 headers: HashMap::new(),
                 body: None,
             }
         })
         .concurrency(10)
-        .requests(100)
+        .requests(1000)
         .show_progress(true)
         .after_request(move |ctx| match ctx.status {
             Some(503_u16) => {
+                // Sleeping for 500ms after 503 status
                 sleep(Duration::from_millis(500));
                 HookAction::Retry
-            },
+            }
             _ => HookAction::Continue,
         })
         .build()?
